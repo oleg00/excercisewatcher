@@ -1,0 +1,14 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "d:\\University\\6sem\\CrossPlatformProgramming\\cw\\opencv\\build\\java\\opencv-452.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.base.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.controls.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.fxml.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.graphics.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.media.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.swing.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx.web.jar",
+    "d:\\ProgramFiles\\Java\\javafx-sdk-11.0.2\\lib\\javafx-swt.jar"
+  ]
+}
