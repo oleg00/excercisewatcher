@@ -1,12 +1,13 @@
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
 
 import openCVutils.*;
+import resources.Localization;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,22 +20,41 @@ public class Controller {
     private ImageView currentFrame;
 
     @FXML
-    private Button button;
+    private Button cameraToggle;
 
+    @FXML
+    private Button changeLang;
 
     private VideoCapture capture = new VideoCapture();
 	private ScheduledExecutorService timer;
     private boolean cameraActive = false;
     private static int cameraId = 0;
 
+	private ResourceBundle resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
+
+	void updateLocale() {
+		this.resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
+		cameraToggle.setText(this.cameraActive ? resBundle.getString("stop_camera") : resBundle.getString("start_camera"));
+		changeLang.setText(resBundle.getString("change_lang"));
+	}
+
     @FXML
     void initialize() {
-        System.out.println("loaded");
+		updateLocale();
     }
+
+	@FXML
+    void onChangeLang() {
+		if (Localization.currentLocale == Localization.UKRAINE) {
+			Localization.setCurrentLocale(Localization.ENGLISH);
+		} else {
+			Localization.setCurrentLocale(Localization.UKRAINE);
+		}
+		updateLocale();
+	}
 
     @FXML
     void onStartCamera(ActionEvent event) {
-        System.out.println("test");
 
         if (!this.cameraActive)
         {
@@ -59,7 +79,7 @@ public class Controller {
                 this.timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS);
                 
                 // update the button content
-                this.button.setText("Stop Camera");
+                this.cameraToggle.setText(resBundle.getString("stop_camera"));
             }
             else
             {
@@ -72,7 +92,7 @@ public class Controller {
             // the camera is not active at this point
             this.cameraActive = false;
             // update again the button content
-            this.button.setText("Start Camera");
+			this.cameraToggle.setText(resBundle.getString("start_camera"));
             
             // stop the timer
             this.stopAcquisition();
