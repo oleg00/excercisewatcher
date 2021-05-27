@@ -7,11 +7,15 @@ public class Exercise {
     private String _description;
     private ExerciseGroupType _groupType;
 
-    public Exercise(int id, String name, String description, ExerciseGroupType groupType) {
-        SetId(id);
+    public Exercise(String name, String description, ExerciseGroupType groupType) {
         SetName(name);
         SetDescription(description);
         SetGroupType(groupType);
+    }
+
+    public Exercise(int id, String name, String description, ExerciseGroupType groupType) {
+        this(name, description, groupType);
+        SetId(id);
     }
 
     public int GetId() {
