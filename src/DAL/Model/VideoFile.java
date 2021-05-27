@@ -4,12 +4,26 @@ import Util.Exception.FileException;
 import Util.Exception.LoggingException;
 
 public class VideoFile {
-   
+
     private int _id;
     private int _size;
     private VideoFileFormatType _formatType;
     private int _duration;
     private String _fileUri;
+
+    public VideoFile(int size, VideoFileFormatType formatType, 
+    int duration, String fileUri) throws LoggingException {
+        SetSize(size);
+        SetFormatType(formatType);
+        SetDuration(duration);
+        SetFileUri(fileUri);
+    }
+
+    public VideoFile(int id, int size, VideoFileFormatType formatType, 
+    int duration, String fileUri) throws LoggingException {
+        this(size, formatType, duration, fileUri);
+        SetId(id);
+    }
 
     public int GetId() {
         return _id;
@@ -58,4 +72,3 @@ public class VideoFile {
     }
 
 }
-

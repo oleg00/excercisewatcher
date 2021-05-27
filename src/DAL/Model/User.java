@@ -6,6 +6,16 @@ public class User {
     private String _login;
     private String _passwordHash;
 
+    public User(String login, String passwordHash) {
+        SetLogin(login);
+        SetPasswordHash(passwordHash);
+    }
+
+    public User(int id, String login, String passwordHash) {
+        this(login, passwordHash);
+        SetId(id);
+    }
+    
     public int GetId() {
         return _id;
     }
@@ -21,7 +31,7 @@ public class User {
     public void SetLogin(String value) {
         _login = value;
     }
-    
+
     public String GetPasswordHash() {
         return _passwordHash;
     }

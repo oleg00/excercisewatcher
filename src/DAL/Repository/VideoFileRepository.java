@@ -2,38 +2,61 @@ package DAL.Repository;
 
 import java.util.ArrayList;
 
+import javax.swing.GroupLayout;
+
 import DAL.Model.VideoFile;
+import DAL.Model.VideoFileFormatType;
+import DAL.SQLClient.SQLClient;
+import DAL.SQLClient.SQLClientSettings;
+import Util.Exception.DbException;
 
 public class VideoFileRepository implements IRepository<VideoFile> {
 
+    private SQLClient _sqlClient;
+
+    public VideoFileRepository() throws DbException {
+        _sqlClient = new SQLClient(SQLClientSettings.DbPath);
+    }
+
     @Override
-    public ArrayList<VideoFile> GetAll() {
+    public ArrayList<VideoFile> GetAll() throws DbException {
+
+        var videos = new ArrayList<VideoFile>();
+        var rs = _sqlClient.ExecuteSelect(SQLClientSettings.SelectVideoFilesQuery);
+
+        try {
+            while (rs.next()) {
+                var videoFile = new VideoFile(rs.getInt("size"), VideoFileFormatType.values()[rs.getInt("formatType")],
+                        rs.getInt("duration"), rs.getString("fileURI"));
+                videos.add(videoFile);
+            }
+        } catch (Exception e) {
+        }
+
+        return videos;
+    }
+
+    @Override
+    public VideoFile Get(int id) throws DbException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public ArrayList<VideoFile> Get(int id) {
-        // TODO Auto-generated method stub
-        return null;
+    public boolean Add(VideoFile entity) throws DbException {
+        return _sqlClient.InsertVideoFile(entity);
     }
 
     @Override
-    public ArrayList<VideoFile> Add(VideoFile entity) {
+    public boolean Update(VideoFile entity) throws DbException {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
     @Override
-    public ArrayList<VideoFile> Update(VideoFile entity) {
+    public boolean Delete(int id) throws DbException {
         // TODO Auto-generated method stub
-        return null;
+        return false;
     }
 
-    @Override
-    public ArrayList<VideoFile> Delete(int id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-    
 }
