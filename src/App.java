@@ -12,9 +12,8 @@ public class App extends Application {
     @Override
     public void start(final Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("ui.fxml"));
-            primaryStage.setTitle("Lab 2");
-            primaryStage.setScene(new Scene(root, 300, 550));
+            Parent login = FXMLLoader.load(getClass().getResource("login.fxml"));
+            primaryStage.setScene(new Scene(login, 300, 550));
 			primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {

@@ -1,10 +1,20 @@
+package controllers;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.VideoWriter;
+import org.opencv.videoio.Videoio;
 
 import openCVutils.*;
 import resources.Localization;
@@ -22,20 +32,17 @@ public class Controller {
     @FXML
     private Button cameraToggle;
 
-    @FXML
-    private Button changeLang;
-
     private VideoCapture capture = new VideoCapture();
 	private ScheduledExecutorService timer;
     private boolean cameraActive = false;
     private static int cameraId = 0;
+	private VideoWriter videoWriter;
 
 	private ResourceBundle resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 
 	void updateLocale() {
 		this.resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 		cameraToggle.setText(this.cameraActive ? resBundle.getString("stop_camera") : resBundle.getString("start_camera"));
-		changeLang.setText(resBundle.getString("change_lang"));
 	}
 
     @FXML
@@ -43,19 +50,8 @@ public class Controller {
 		updateLocale();
     }
 
-	@FXML
-    void onChangeLang() {
-		if (Localization.currentLocale == Localization.UKRAINE) {
-			Localization.setCurrentLocale(Localization.ENGLISH);
-		} else {
-			Localization.setCurrentLocale(Localization.UKRAINE);
-		}
-		updateLocale();
-	}
-
     @FXML
     void onStartCamera(ActionEvent event) {
-
         if (!this.cameraActive)
         {
             // start the video capture
@@ -117,6 +113,9 @@ public class Controller {
 				// read the current frame
 				this.capture.read(frame);
 				
+				if (Objects.isNull(videoWriter)) createVideoWriter(frame);
+				videoWriter.write(frame);
+
 				// // if the frame is not empty, process it
 				if (!frame.empty())
 				{
@@ -133,6 +132,13 @@ public class Controller {
 		}
 		
 		return frame;
+	}
+
+	private void createVideoWriter(Mat frame) {
+		String filename = "videos/" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")).format(new Date()) + ".avi";
+		
+        int fourcc = VideoWriter.fourcc('h','2','6','4');
+        videoWriter = new VideoWriter(filename, fourcc, 25, frame.size(), true);
 	}
 	
 	/**
@@ -159,7 +165,11 @@ public class Controller {
 		{
 			// release the camera
 			this.capture.release();
+
+			updateImageView(currentFrame, null);
 		}
+
+		if (videoWriter.isOpened()) videoWriter.release();
 	}
 	
 	/**
