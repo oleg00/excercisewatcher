@@ -43,6 +43,9 @@ public class LoginController {
         loginButton.setOnAction(this::login);
     }
 
+    /**
+     * Updates login fields locale.
+     */
     void updateLocale() {
 		ResourceBundle resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 
@@ -52,6 +55,9 @@ public class LoginController {
         langButton.setText(Localization.currentLocale.getLanguage().toUpperCase());
 	}
 
+    /**
+     * Changes locale from eng to ukr and vice-versa.
+     */
     void changeLocale() {
         if (Localization.currentLocale == Localization.UKRAINE) {
 			Localization.setCurrentLocale(Localization.ENGLISH);
@@ -61,6 +67,10 @@ public class LoginController {
 		updateLocale();
     }
 
+    /**
+     * Login page switching to the main page.
+     * @param actionEvent
+     */
     void login(ActionEvent actionEvent) {
         Stage primaryStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         FXMLLoader mainPage = new FXMLLoader(getClass().getResource("../main.fxml"));

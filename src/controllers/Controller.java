@@ -40,6 +40,9 @@ public class Controller {
 
 	private ResourceBundle resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 
+	/**
+	 * Updates current localization settings.
+	 */
 	void updateLocale() {
 		this.resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 		cameraToggle.setText(this.cameraActive ? resBundle.getString("stop_camera") : resBundle.getString("start_camera"));
@@ -50,6 +53,10 @@ public class Controller {
 		updateLocale();
     }
 
+	/**
+	 * Starts the video capture.
+	 * @param event
+	 */
     @FXML
     void onStartCamera(ActionEvent event) {
         if (!this.cameraActive)
@@ -134,6 +141,10 @@ public class Controller {
 		return frame;
 	}
 
+	/**
+	 * Creates the video writer with the h264 codec.
+	 * @param frame
+	 */
 	private void createVideoWriter(Mat frame) {
 		String filename = "videos/" + (new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")).format(new Date()) + ".avi";
 		
