@@ -51,10 +51,3 @@ public class Exercise {
     }
 
 }
-
-// create table exercise (
-// exerciseid serial primary key,
-// exercisename varchar(64) not null,
-// exercisedescription text not null,
-// exercisegroup ExerciseGroupType not null
-// );

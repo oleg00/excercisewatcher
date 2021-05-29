@@ -13,7 +13,7 @@ public class App extends Application {
     public void start(final Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("ui.fxml"));
-            primaryStage.setTitle("Lab 2");
+            primaryStage.setTitle("Fitness Analytics");
             primaryStage.setScene(new Scene(root, 300, 550));
 			primaryStage.setResizable(false);
             primaryStage.show();

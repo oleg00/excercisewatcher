@@ -1,5 +1,8 @@
 package DAL.SQLClient;
 
+/**
+ * Describes static SQL Client Settings, such as DbPath and Create/Select/Insert queries.
+ */
 public class SQLClientSettings {
 
     public static final String DbPath = "/exercisedbtest.db";

@@ -7,6 +7,9 @@ import DAL.SQLClient.SQLClient;
 import DAL.SQLClient.SQLClientSettings;
 import Util.Exception.DbException;
 
+/**
+ * Implementing Repository<User>.
+ */
 public class UserRepository implements IRepository<User> {
 
     private SQLClient _sqlClient;
@@ -15,6 +18,11 @@ public class UserRepository implements IRepository<User> {
         _sqlClient = new SQLClient(SQLClientSettings.DbPath);
     }
 
+    /**
+     * Gets user by login.
+     * @param login - login text
+     * @return
+     */
     public User Get(String login) {
         try {
             var rs = _sqlClient.ExecuteSelect(SQLClientSettings.SelectUserWhereLoginQuery, login);

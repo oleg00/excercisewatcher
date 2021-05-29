@@ -1,15 +1,15 @@
 package DAL.Repository;
 
 import java.util.ArrayList;
-
-import javax.swing.GroupLayout;
-
 import DAL.Model.VideoFile;
 import DAL.Model.VideoFileFormatType;
 import DAL.SQLClient.SQLClient;
 import DAL.SQLClient.SQLClientSettings;
 import Util.Exception.DbException;
 
+/**
+ * Implementing Repository<VideoFile>.
+ */
 public class VideoFileRepository implements IRepository<VideoFile> {
 
     private SQLClient _sqlClient;
