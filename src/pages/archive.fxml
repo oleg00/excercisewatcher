@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="300.0" style="-fx-background-color: #111111;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ArchiveController">
+   <children>
+      <Button fx:id="goBack" layoutX="85.0" layoutY="510.0" mnemonicParsing="false" onAction="#onGoBack" prefHeight="18.0" prefWidth="129.0" style="-fx-background-color: #2b2b2b;" textFill="WHITE" />
+      <ListView fx:id="archiveListView" layoutX="14.0" layoutY="48.0" prefHeight="454.0" prefWidth="272.0" style="-fx-background-color: #363636;" />
+      <Label fx:id="archiveLabel" alignment="CENTER" layoutX="14.0" layoutY="24.0" prefHeight="23.0" prefWidth="272.0" text="archive" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Book Antiqua" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

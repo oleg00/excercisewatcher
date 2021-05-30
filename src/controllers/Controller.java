@@ -1,4 +1,5 @@
 package controllers;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,9 +21,14 @@ import openCVutils.*;
 import resources.Localization;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class Controller {
 
@@ -31,6 +37,9 @@ public class Controller {
 
     @FXML
     private Button cameraToggle;
+
+    @FXML
+    private Button videosButton;
 
     private VideoCapture capture = new VideoCapture();
 	private ScheduledExecutorService timer;
@@ -41,13 +50,27 @@ public class Controller {
 	private ResourceBundle resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 
 	void updateLocale() {
-		this.resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
+		resBundle = ResourceBundle.getBundle("resources/ResourceBundle", Localization.currentLocale);
 		cameraToggle.setText(this.cameraActive ? resBundle.getString("stop_camera") : resBundle.getString("start_camera"));
+		videosButton.setText(resBundle.getString("list_of_videos"));
 	}
 
     @FXML
     void initialize() {
 		updateLocale();
+    }
+
+	@FXML
+    void onVideosListOpen(ActionEvent actionEvent) {
+		Stage actualStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        FXMLLoader mainPage = new FXMLLoader(getClass().getResource("../pages/archive.fxml"));
+        Parent mainPane;
+        try {
+            mainPane = mainPage.load();
+            actualStage.setScene(new Scene(mainPane));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

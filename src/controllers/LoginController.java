@@ -63,7 +63,7 @@ public class LoginController {
 
     void login(ActionEvent actionEvent) {
         Stage primaryStage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        FXMLLoader mainPage = new FXMLLoader(getClass().getResource("../main.fxml"));
+        FXMLLoader mainPage = new FXMLLoader(getClass().getResource("../pages/main.fxml"));
         Parent mainPane;
         try {
             mainPane = mainPage.load();
@@ -72,8 +72,5 @@ public class LoginController {
             e.printStackTrace();
             // System.out.println("test");
         }
-        
-        // Parent main = FXMLLoader.load(getClass().getResource("main.fxml"));
-
     }
 }
