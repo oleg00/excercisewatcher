@@ -8,6 +8,9 @@ import DAL.SQLClient.SQLClient;
 import DAL.SQLClient.SQLClientSettings;
 import Util.Exception.DbException;
 
+/**
+ * Implementing Repository<Exercise>.
+ */
 public class ExerciseRepository implements IRepository<Exercise> {
 
     private SQLClient _sqlClient;

@@ -5,13 +5,23 @@ import DAL.Model.User;
 import DAL.Model.VideoFile;
 import Util.Exception.DbException;
 
+/**
+ * SQLite client that can connect to SQLite DB, execute select and insert queries.
+ */
 public class SQLClient {
 
-    private static Connection DbConnection;
+    /**
+     * DataBase JDBC Connection.
+     */
+    private Connection _dbConnection;
 
+    /**
+     * Ctor. Initializes SQL JDBC connection.
+     * @param dbPath
+     * @throws DbException
+     */
     public SQLClient(String dbPath) throws DbException {
-        DbConnection = GetConnectionFromDriverManager(dbPath);
-        // CreateTable();
+        _dbConnection = GetConnectionFromDriverManager(dbPath);
     }
 
     /**
@@ -23,10 +33,10 @@ public class SQLClient {
      */
     private Connection GetConnectionFromDriverManager(String dbPath) throws DbException {
         try {
-            if (DbConnection == null)
-                DbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+            if (_dbConnection == null)
+                _dbConnection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
 
-            return DbConnection;
+            return _dbConnection;
         } catch (SQLException e) {
             throw new DbException(
                     "GetConnectionFromDriverManager() exception: " + dbPath + "; message: " + e.getMessage());
@@ -34,30 +44,29 @@ public class SQLClient {
     }
 
     /**
-     * Creates Hospital and Log tables
-     * 
-     * @param dbPath path to the db file
-     * @throws CustomException
+     * Executes create query.
+     * @param createQuery - SQL Create query
+     * @return execution result
+     * @throws DbException
      */
-    public void ExecuteCreate(String createQuery) throws DbException {
+    public boolean ExecuteCreate(String createQuery) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(createQuery);
-            statement.execute();
+            var statement = _dbConnection.prepareStatement(createQuery);
+            return statement.execute();
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
     }
 
     /**
-     * Retrieves Hospital data from the db using default select query.
-     * 
-     * @param dbPath path to the db file
-     * @return list of hospital entities
+     * Executes Select Query.
+     * @param selectQuery - SQL Select query
+     * @return ResultSet containing query result
      * @throws DbException
      */
     public ResultSet ExecuteSelect(String selectQuery) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(selectQuery);
+            var statement = _dbConnection.prepareStatement(selectQuery);
             return statement.executeQuery();
         } catch (SQLException ex) {
             throw new DbException(ex.getMessage());
@@ -65,15 +74,15 @@ public class SQLClient {
     }
 
     /**
-     * 
-     * @param selectQuery
+     * Executes select query with one "where" parameter with the  prepared statement.
+     * @param selectQuery 
      * @param searchParameter
-     * @return
+     * @return ResultSet containing query results
      * @throws DbException
      */
     public ResultSet ExecuteSelect(String selectQuery, String searchParameter) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(selectQuery);
+            var statement = _dbConnection.prepareStatement(selectQuery);
             statement.setString(1, searchParameter);
             return statement.executeQuery();
         } catch (SQLException ex) {
@@ -105,7 +114,7 @@ public class SQLClient {
      */
     private PreparedStatement PrepareUserStatement(User user) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(SQLClientSettings.InsertUserQuery);
+            var statement = _dbConnection.prepareStatement(SQLClientSettings.InsertUserQuery);
             statement.setString(1, user.GetLogin());
             statement.setString(2, user.GetPasswordHash());
             return statement;
@@ -123,7 +132,7 @@ public class SQLClient {
      */
     private PreparedStatement PrepareVideoFileStatement(VideoFile video) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(SQLClientSettings.InsertVideoFileQuery);
+            var statement = _dbConnection.prepareStatement(SQLClientSettings.InsertVideoFileQuery);
             statement.setInt(1, video.GetSize());
             statement.setInt(2, video.GetFormatType().ordinal());
             statement.setInt(3, video.GetDuration());
@@ -143,7 +152,7 @@ public class SQLClient {
      */
     private PreparedStatement PrepareLogStatement(String msg) throws DbException {
         try {
-            var statement = DbConnection.prepareStatement(SQLClientSettings.InsertLogQuery);
+            var statement = _dbConnection.prepareStatement(SQLClientSettings.InsertLogQuery);
             statement.setString(1, msg);
             return statement;
         } catch (SQLException e) {
